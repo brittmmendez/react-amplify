@@ -1,27 +1,65 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createConsumable = /* GraphQL */ `
-  mutation CreateConsumable(
-    $deviceId: ID!
-    $deviceType: DeviceType!
-    $startDate: AWSDateTime!
-    $consumableType: ConsumableType!
-  ) {
-    createConsumable(
-      deviceId: $deviceId
-      deviceType: $deviceType
-      startDate: $startDate
-      consumableType: $consumableType
-    ) {
-      consumableId
+export const claimDevice = /* GraphQL */ `
+  mutation ClaimDevice($deviceId: ID!, $deviceType: DeviceType!) {
+    claimDevice(deviceId: $deviceId, deviceType: $deviceType) {
+      createdBy
       deviceId
-      startDate
-      consumableType
-      totalSessionCount
-      totalSessionDurationSeconds
-      state
+      deviceType
+      receivedTime
+      stateId
+      thingName
+      traceId
+      consumerId
+      status
+      baseConnectColor
+      baseDockedColor
+      baseDownloadColor
+      baseFirmwareVersion
+      baseReadyColor
+      baseUploadColor
+      batteryLevel
+      cartridgeUse
+      cellBand
+      cellDetail
+      cellStrength
+      displayBrightness
+      firmwareMode
+      handleChargingColor
+      handleDocked
+      handleDockedColor
+      handleDownloadColor
+      handleFirmwareVersion
+      handleId
+      handleMode
+      handlePressureHighColor
+      handlePressureLowColor
+      handlePressureMedColor
+      heaterLevel
+      lastCartridgeReplacement
+      logLevel
+      operatingSystem
+      operatingSystemVersion
+      memoryUsed
+      pressureBaseline
+      pressureHysteresis
+      pressureThreshold1
+      pressureThreshold2
+      pressureThreshold2ModeHigh
+      pressureThreshold2ModeLow
+      pressureThreshold2ModeMedium
+      pressureThresholdStroke
+      rssi
+      sensorRangeAcceleration
+      sensorRangeGyro
+      sensorRangeMag
     }
+  }
+`;
+export const rejectCartridgeEject = /* GraphQL */ `
+  mutation RejectCartridgeEject($sessionId: ID!) {
+    rejectCartridgeEject(sessionId: $sessionId)
   }
 `;
 export const createDevice = /* GraphQL */ `
@@ -38,20 +76,47 @@ export const createDevice = /* GraphQL */ `
         traceId
         consumerId
         status
-        brushHeadDate
-        firmwareVersion
+        baseConnectColor
+        baseDockedColor
+        baseDownloadColor
+        baseFirmwareVersion
+        baseReadyColor
+        baseUploadColor
+        batteryLevel
+        cartridgeUse
+        cellBand
+        cellDetail
+        cellStrength
+        displayBrightness
+        firmwareMode
+        handleChargingColor
+        handleDocked
+        handleDockedColor
+        handleDownloadColor
+        handleFirmwareVersion
+        handleId
+        handleMode
+        handlePressureHighColor
+        handlePressureLowColor
+        handlePressureMedColor
+        heaterLevel
+        lastCartridgeReplacement
         logLevel
-        macAddress
-        name
         operatingSystem
         operatingSystemVersion
-        parentDeviceId
-        protocolVersion
-        remainingBrushHeadDays
-        ringColor
+        memoryUsed
+        pressureBaseline
+        pressureHysteresis
+        pressureThreshold1
+        pressureThreshold2
+        pressureThreshold2ModeHigh
+        pressureThreshold2ModeLow
+        pressureThreshold2ModeMedium
+        pressureThresholdStroke
         rssi
-        ssid
-        voiceAssistantConfigured
+        sensorRangeAcceleration
+        sensorRangeGyro
+        sensorRangeMag
       }
       privateKey
     }
@@ -68,7 +133,6 @@ export const createJob = /* GraphQL */ `
     $md5: String
     $target: String
     $version: String
-    $configType: String
   ) {
     createJob(
       deviceId: $deviceId
@@ -80,12 +144,11 @@ export const createJob = /* GraphQL */ `
       md5: $md5
       target: $target
       version: $version
-      configType: $configType
     )
   }
 `;
 export const cancelJob = /* GraphQL */ `
-  mutation CancelJob($input: CancelJobInput!) {
+  mutation CancelJob($input: CancelJobInput) {
     cancelJob(input: $input)
   }
 `;
@@ -99,31 +162,32 @@ export const createSession = /* GraphQL */ `
       traceId
       consumerId
       sessionId
-      batteryLevel
-      brushModel
-      brushScore
-      brushingDuration
-      cleanTongue
+      algoVersion
+      cartridgeChange
+      cartridgeChangeStatus
+      cartridgeUse
       client
       clientVersion
-      coveragePercentage
-      flossTeeth
-      gatewayModel
-      gumBleeding
-      handleSessionId
-      onEventCount
+      diagnosticResult
+      errorCode
+      errorMessage
+      handleMode
+      modelVersion
       operatingSystem
       operatingSystemVersion
-      parentDeviceId
-      pressureDistribution
-      pressureDuration
-      pressureEventCount
-      primaryBrushingMode
-      rinseMouth
+      percentageOverThreshold
+      percentageOverThresholdByStroke
+      sessionDuration
       sessionStartTime
+      sessionStrokes
+      sessionStrokesDuration
+      sessionStrokesStats
+      sessionStrokeCount
       sessionType
-      zonedBrushTime
+      threshold1
+      threshold2
       zonedPressureTime
+      zonedRepeatTime
     }
   }
 `;
@@ -146,35 +210,13 @@ export const createSubscription = /* GraphQL */ `
     }
   }
 `;
-export const createReplenishment = /* GraphQL */ `
-  mutation CreateReplenishment(
-    $refreshToken: String!
-    $clientId: String!
-    $serialNumber: String!
-    $replenishmentType: ReplenishmentType
-  ) {
-    createReplenishment(
-      refreshToken: $refreshToken
-      clientId: $clientId
-      serialNumber: $serialNumber
-      replenishmentType: $replenishmentType
-    ) {
-      replenishmentId
-      replenishmentType
-      nextOrderDate
-      status
-      productId
-      quantity
-    }
-  }
-`;
 export const deleteDevice = /* GraphQL */ `
   mutation DeleteDevice($deviceId: ID!, $deviceType: DeviceType!) {
     deleteDevice(deviceId: $deviceId, deviceType: $deviceType)
   }
 `;
 export const deleteSession = /* GraphQL */ `
-  mutation DeleteSession($sessionId: String!) {
+  mutation DeleteSession($sessionId: ID!) {
     deleteSession(sessionId: $sessionId)
   }
 `;
@@ -183,63 +225,27 @@ export const deleteSubscription = /* GraphQL */ `
     deleteSubscription(subscriptionId: $subscriptionId)
   }
 `;
-export const deleteReplenishment = /* GraphQL */ `
-  mutation DeleteReplenishment($replenishmentId: ID!) {
-    deleteReplenishment(replenishmentId: $replenishmentId)
-  }
-`;
 export const deleteUser = /* GraphQL */ `
   mutation DeleteUser {
     deleteUser
   }
 `;
 export const placeOrder = /* GraphQL */ `
-  mutation PlaceOrder($replenishmentId: ID!) {
-    placeOrder(replenishmentId: $replenishmentId) {
+  mutation PlaceOrder($subscriptionId: ID!) {
+    placeOrder(subscriptionId: $subscriptionId) {
       orderId
       status
     }
   }
 `;
-export const updateConsumable = /* GraphQL */ `
-  mutation UpdateConsumable(
-    $consumableId: ID!
-    $startDate: AWSDateTime
-    $consumableType: ConsumableType
-    $state: ConsumableState
-    $totalSessionCount: Int
-    $totalSessionDurationSeconds: Int
-  ) {
-    updateConsumable(
-      consumableId: $consumableId
-      startDate: $startDate
-      consumableType: $consumableType
-      state: $state
-      totalSessionCount: $totalSessionCount
-      totalSessionDurationSeconds: $totalSessionDurationSeconds
-    ) {
-      consumableId
-      deviceId
-      startDate
-      consumableType
-      totalSessionCount
-      totalSessionDurationSeconds
-      state
-    }
+export const unclaimDevice = /* GraphQL */ `
+  mutation UnclaimDevice($deviceId: ID!, $deviceType: DeviceType!) {
+    unclaimDevice(deviceId: $deviceId, deviceType: $deviceType)
   }
 `;
 export const updateDevice = /* GraphQL */ `
   mutation UpdateDevice($input: UpdateDeviceInput) {
     updateDevice(input: $input) {
-      consumables {
-        consumableId
-        deviceId
-        startDate
-        consumableType
-        totalSessionCount
-        totalSessionDurationSeconds
-        state
-      }
       createdBy
       deviceId
       deviceType
@@ -249,26 +255,55 @@ export const updateDevice = /* GraphQL */ `
       traceId
       consumerId
       status
-      brushHeadDate
-      firmwareVersion
+      baseConnectColor
+      baseDockedColor
+      baseDownloadColor
+      baseFirmwareVersion
+      baseReadyColor
+      baseUploadColor
+      batteryLevel
+      cartridgeUse
+      cellBand
+      cellDetail
+      cellStrength
+      displayBrightness
+      firmwareMode
+      handleChargingColor
+      handleDocked
+      handleDockedColor
+      handleDownloadColor
+      handleFirmwareVersion
+      handleId
+      handleMode
+      handlePressureHighColor
+      handlePressureLowColor
+      handlePressureMedColor
+      heaterLevel
+      lastCartridgeReplacement
       logLevel
-      macAddress
-      name
       operatingSystem
       operatingSystemVersion
-      parentDeviceId
-      protocolVersion
-      remainingBrushHeadDays
-      ringColor
+      memoryUsed
+      pressureBaseline
+      pressureHysteresis
+      pressureThreshold1
+      pressureThreshold2
+      pressureThreshold2ModeHigh
+      pressureThreshold2ModeLow
+      pressureThreshold2ModeMedium
+      pressureThresholdStroke
       rssi
-      ssid
-      voiceAssistantConfigured
+      sensorRangeAcceleration
+      sensorRangeGyro
+      sensorRangeMag
     }
   }
 `;
 export const updateUser = /* GraphQL */ `
   mutation UpdateUser($input: UpdateUserInput) {
     updateUser(input: $input) {
+      cartridgeCount
+      cartridgeLifeThresholds
       consumerId
       country
       createdAt
@@ -279,8 +314,6 @@ export const updateUser = /* GraphQL */ `
       marketingOptIn
       notificationPreferences
       phoneNumber
-      termsAndConditions
-      timezone
       subscriptions {
         subscriptionId
         subscriptionType
@@ -288,102 +321,9 @@ export const updateUser = /* GraphQL */ `
         status
         productId
       }
-      replenishmentServices {
-        replenishmentId
-        replenishmentType
-        nextOrderDate
-        status
-        productId
-        quantity
-      }
-    }
-  }
-`;
-export const updateSession = /* GraphQL */ `
-  mutation UpdateSession(
-    $sessionId: ID!
-    $deviceId: ID
-    $deviceType: DeviceType
-    $parentDeviceId: ID
-    $parentDeviceType: DeviceType
-  ) {
-    updateSession(
-      sessionId: $sessionId
-      deviceId: $deviceId
-      deviceType: $deviceType
-      parentDeviceId: $parentDeviceId
-      parentDeviceType: $parentDeviceType
-    ) {
-      deviceId
-      deviceType
-      receivedTime
-      thingName
-      traceId
-      consumerId
-      sessionId
-      batteryLevel
-      brushModel
-      brushScore
-      brushingDuration
-      cleanTongue
-      client
-      clientVersion
-      coveragePercentage
-      flossTeeth
-      gatewayModel
-      gumBleeding
-      handleSessionId
-      onEventCount
-      operatingSystem
-      operatingSystemVersion
-      parentDeviceId
-      pressureDistribution
-      pressureDuration
-      pressureEventCount
-      primaryBrushingMode
-      rinseMouth
-      sessionStartTime
-      sessionType
-      zonedBrushTime
-      zonedPressureTime
-    }
-  }
-`;
-export const updateBrushingSession = /* GraphQL */ `
-  mutation UpdateBrushingSession($input: UpdateSessionInput!) {
-    updateBrushingSession(input: $input) {
-      deviceId
-      deviceType
-      receivedTime
-      thingName
-      traceId
-      consumerId
-      sessionId
-      batteryLevel
-      brushModel
-      brushScore
-      brushingDuration
-      cleanTongue
-      client
-      clientVersion
-      coveragePercentage
-      flossTeeth
-      gatewayModel
-      gumBleeding
-      handleSessionId
-      onEventCount
-      operatingSystem
-      operatingSystemVersion
-      parentDeviceId
-      pressureDistribution
-      pressureDuration
-      pressureEventCount
-      primaryBrushingMode
-      rinseMouth
-      sessionStartTime
-      sessionType
-      zonedBrushTime
-      zonedPressureTime
+      termsAndConditions
+      timezone
+      userSurvey
     }
   }
 `;

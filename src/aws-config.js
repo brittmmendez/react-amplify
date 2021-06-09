@@ -44,14 +44,14 @@
 // export default awsConfig
 
 const awsConfig = {
-  brandName: 'oralb',
-  aws_appsync_graphqlEndpoint: "https://cqmzvjhyfrfgtapw4ckjd7kg7a.appsync-api.us-east-1.amazonaws.com/graphql",
+  brandName: 'gillette',
+  aws_appsync_graphqlEndpoint: "https://kldwlpu3q5hmpp2itmhk4lfym4.appsync-api.us-east-1.amazonaws.com/graphql",
   aws_appsync_region: "us-east-1",
   aws_appsync_authenticationType:"AMAZON_COGNITO_USER_POOLS",
-  aws_cognito_identity_pool_id: "us-east-1:f920fcdd-ce3a-49cd-a267-e16585ff55eb",
+  aws_cognito_identity_pool_id: "us-east-1:26d44787-4844-443a-b53f-054cf1a66ca1",
   region: "us-east-1",
-  aws_user_pools_id: "us-east-1_E7a11Vigx",
-  aws_user_pools_web_client_id: "32d0jqj246rgfcbe5sv3lb5mse"
+  aws_user_pools_id: "us-east-1_XciYc4P2t",
+  aws_user_pools_web_client_id: "2lt522cv7f633deqgq68nuqg3b"
 }
 
 export default awsConfig

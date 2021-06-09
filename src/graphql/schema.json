@@ -54,6 +54,44 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+          "name" : "deviceHistory",
+          "description" : "  retrieves all user device logs filtered by inputs",
+          "args" : [ {
+            "name" : "filter",
+            "description" : null,
+            "type" : {
+              "kind" : "INPUT_OBJECT",
+              "name" : "TableDeviceFilterInput",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "limit",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          }, {
+            "name" : "nextToken",
+            "description" : null,
+            "type" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            },
+            "defaultValue" : null
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "DeviceConnection",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "logs",
           "description" : "  retrieves all user device logs filtered by inputs",
           "args" : [ {
@@ -130,7 +168,7 @@
           "deprecationReason" : null
         }, {
           "name" : "allJobs",
-          "description" : "  retrieves all consumer jobs for the provided device",
+          "description" : "  retrieves all jobs for the provided device",
           "args" : [ {
             "name" : "deviceId",
             "description" : null,
@@ -166,32 +204,8 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "replenishmentToken",
-          "description" : "  retrieves an AWS access token for replenishment",
-          "args" : [ {
-            "name" : "replenishmentId",
-            "description" : null,
-            "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "ID",
-                "ofType" : null
-              }
-            },
-            "defaultValue" : null
-          } ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
           "name" : "sessions",
-          "description" : "  retrieves all user brushing sessions filtered by inputs",
+          "description" : "  retrieves all user shaving sessions filtered by inputs",
           "args" : [ {
             "name" : "start",
             "description" : null,
@@ -229,15 +243,6 @@
             },
             "defaultValue" : null
           }, {
-            "name" : "orderBySessionStartTime",
-            "description" : null,
-            "type" : {
-              "kind" : "ENUM",
-              "name" : "Sort",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
             "name" : "nextToken",
             "description" : null,
             "type" : {
@@ -265,44 +270,6 @@
           },
           "isDeprecated" : false,
           "deprecationReason" : null
-        }, {
-          "name" : "consumables",
-          "description" : "  retrieves all user consumables",
-          "args" : [ {
-            "name" : "filter",
-            "description" : null,
-            "type" : {
-              "kind" : "INPUT_OBJECT",
-              "name" : "TableConsumableFilterInput",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "limit",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "nextToken",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          } ],
-          "type" : {
-            "kind" : "OBJECT",
-            "name" : "ConsumableConnection",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
         } ],
         "inputFields" : null,
         "interfaces" : [ ],
@@ -311,25 +278,10 @@
       }, {
         "kind" : "OBJECT",
         "name" : "Device",
-        "description" : "  device state data model for oralcare",
+        "description" : "  device state data model for ibond",
         "fields" : [ {
-          "name" : "consumables",
-          "description" : "  PLATFORM MANAGED\n what consumables the device has",
-          "args" : [ ],
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "OBJECT",
-              "name" : "Consumable",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
           "name" : "createdBy",
-          "description" : "  identifies which interface triggered the creation of the state record",
+          "description" : "  PLATFORM MANAGED\n identifies which interface triggered the creation of the state record",
           "args" : [ ],
           "type" : {
             "kind" : "ENUM",
@@ -358,13 +310,9 @@
           "description" : "  hardware model as defined by the internal engineering name/number",
           "args" : [ ],
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "DeviceType",
-              "ofType" : null
-            }
+            "kind" : "ENUM",
+            "name" : "DeviceType",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -432,30 +380,48 @@
           "description" : "  current state of the device",
           "args" : [ ],
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "DeviceStatus",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "brushHeadDate",
-          "description" : "  DEVICE ATTRIBUTES\n ISO-8601 Datetime that the brushhead was installed",
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "AWSDateTime",
+            "kind" : "ENUM",
+            "name" : "DeviceStatus",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "firmwareVersion",
-          "description" : "  firmware version of the device",
+          "name" : "baseConnectColor",
+          "description" : "  DEVICE ATTRIBUTES\n (JSON array) LED color of base when connecting to cloud",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "baseDockedColor",
+          "description" : "  (JSON array) LED color when razor is docked with full charge",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "baseDownloadColor",
+          "description" : "  (JSON array) LED color when downloading data",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "baseFirmwareVersion",
+          "description" : "  current firmware version on the base",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
@@ -465,19 +431,162 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "logLevel",
-          "description" : "  log verbosity",
+          "name" : "baseReadyColor",
+          "description" : "  (JSON array) LED when ready to process",
           "args" : [ ],
           "type" : {
-            "kind" : "ENUM",
-            "name" : "LogLevel",
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "macAddress",
-          "description" : "  macAddress of device Bluetooth chip",
+          "name" : "baseUploadColor",
+          "description" : "  (JSON array) LED color when uploading data",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "batteryLevel",
+          "description" : "  battery level",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "cartridgeUse",
+          "description" : "  number of cartridges used",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "cellBand",
+          "description" : "  gives information about the currently used band",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "cellDetail",
+          "description" : "  cell tower information",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "cellStrength",
+          "description" : "  cell tower signal strength",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "displayBrightness",
+          "description" : "  display brightness",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "firmwareMode",
+          "description" : "  model used to analyze the sensor data",
+          "args" : [ ],
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "FirmwareMode",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handleChargingColor",
+          "description" : "  (JSON array) LED color while charging",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handleDocked",
+          "description" : "  if the base detects the handle",
+          "args" : [ ],
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "HandleDocked",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handleDockedColor",
+          "description" : "  (JSON array) LED color when ready full of charge and docked",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handleDownloadColor",
+          "description" : "  (JSON array) LED color while downloading data",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handleFirmwareVersion",
+          "description" : "  current firmware version on the handle",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handleId",
+          "description" : "  handle ID (96bit)",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
@@ -487,12 +596,78 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "name",
-          "description" : "  user given device name",
+          "name" : "handleMode",
+          "description" : "  handle mode",
+          "args" : [ ],
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "HandleMode",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handlePressureHighColor",
+          "description" : "  LED indicating load (more than thresh_2, red)",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handlePressureLowColor",
+          "description" : "  LED indicating load (more than thresh_1, green)",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "handlePressureMedColor",
+          "description" : "  LED indicating load (less than thresh_1, dim green)",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "heaterLevel",
+          "description" : "  heater level",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "lastCartridgeReplacement",
+          "description" : "  date of most recent cartridge change as ISO 8601 date time string",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSDateTime",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "logLevel",
+          "description" : "  log level",
+          "args" : [ ],
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "LogLevel",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -520,19 +695,8 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "parentDeviceId",
-          "description" : "  gateway device 128bit UUID v4 algorithm",
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "protocolVersion",
-          "description" : "  protocol version from bluetooth specification as defined by P&G(decimal converted version of hex code)",
+          "name" : "memoryUsed",
+          "description" : "  memory capacity used",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
@@ -542,8 +706,8 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "remainingBrushHeadDays",
-          "description" : "  calculated value on the number of days left on a brush head",
+          "name" : "pressureBaseline",
+          "description" : "  baseline value from CALC_PRESSURE",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
@@ -553,12 +717,78 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "ringColor",
-          "description" : "  hex code (#FFFFFF)",
+          "name" : "pressureHysteresis",
+          "description" : "  hysterisis difference",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "pressureThreshold1",
+          "description" : "  grams of load required to light up led",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "pressureThreshold2",
+          "description" : "  grams of load for green to red",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "pressureThreshold2ModeHigh",
+          "description" : "  calculated threshold from diagnostic + 1000",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "pressureThreshold2ModeLow",
+          "description" : "  calculated threshold from diagnostic - 1000",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "pressureThreshold2ModeMedium",
+          "description" : "  calculated threshold from diagnostic",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "pressureThresholdStroke",
+          "description" : "  grams of load required to be considered a stroke",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -575,23 +805,34 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "ssid",
-          "description" : "  wifi network name",
+          "name" : "sensorRangeAcceleration",
+          "description" : "  accelerometer mode",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "Int",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "voiceAssistantConfigured",
-          "description" : "  voice assistant has been setup by end user",
+          "name" : "sensorRangeGyro",
+          "description" : "  gyroscope mode",
           "args" : [ ],
           "type" : {
-            "kind" : "ENUM",
-            "name" : "VoiceAssistantStatus",
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "sensorRangeMag",
+          "description" : "  magnetometer mode",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -600,225 +841,6 @@
         "inputFields" : null,
         "interfaces" : [ ],
         "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "OBJECT",
-        "name" : "Consumable",
-        "description" : "  consumable data model for oralcare",
-        "fields" : [ {
-          "name" : "consumableId",
-          "description" : "  ID of the consumable",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "deviceId",
-          "description" : "  The ID of the device this consumable is attached to",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "startDate",
-          "description" : "  time the consumable was created",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "AWSDateTime",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "consumableType",
-          "description" : "  type of consumable",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "ConsumableType",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "totalSessionCount",
-          "description" : "  session count totalizer - updated in the session status stream",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "totalSessionDurationSeconds",
-          "description" : "  session duration totalizer - updated in the session status stream",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "state",
-          "description" : "  current state of the consumable, when a new consumable is created our mutation will automatically set this to IN_USE and set previous consumable to USED.",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "ConsumableState",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "inputFields" : null,
-        "interfaces" : [ ],
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "SCALAR",
-        "name" : "ID",
-        "description" : "Built-in ID",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "SCALAR",
-        "name" : "AWSDateTime",
-        "description" : "The `AWSDateTime` scalar type provided by AWS AppSync, represents a valid ***extended*** [ISO 8601 DateTime](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) string. In other words, this scalar type accepts datetime strings of the form `YYYY-MM-DDThh:mm:ss.SSSZ`.  The scalar can also accept \"negative years\" of the form `-YYYY` which correspond to years before `0000`. For example, \"**-2017-01-01T00:00Z**\" and \"**-9999-01-01T00:00Z**\" are both valid datetime strings.  The field after the two digit seconds field is a nanoseconds field. It can accept between 1 and 9 digits. So, for example, \"**1970-01-01T12:00:00.2Z**\", \"**1970-01-01T12:00:00.277Z**\" and \"**1970-01-01T12:00:00.123456789Z**\" are all valid datetime strings.  The seconds and nanoseconds fields are optional (the seconds field must be specified if the nanoseconds field is to be used).  The [time zone offset](https://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators) is compulsory for this scalar. The time zone offset must either be `Z` (representing the UTC time zone) or be in the format `±hh:mm:ss`. The seconds field in the timezone offset will be considered valid even though it is not part of the ISO 8601 standard.",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "ENUM",
-        "name" : "ConsumableType",
-        "description" : "  we will assume unknown unless specified",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : [ {
-          "name" : "CHARCOAL",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "CROSS_ACTION",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "FLOSS_ACTION",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "ORTHO_CARE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "OTHER",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "POWER_TIP",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "PRECISION",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "PRO_GUM",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "SENSITIVE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "THREE_D_WHITE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "possibleTypes" : null
-      }, {
-        "kind" : "SCALAR",
-        "name" : "Int",
-        "description" : "Built-in Int",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "ENUM",
-        "name" : "ConsumableState",
-        "description" : "  the state of the consumable",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : [ {
-          "name" : "IN_USE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "USED",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
         "possibleTypes" : null
       }, {
         "kind" : "ENUM",
@@ -845,207 +867,55 @@
         } ],
         "possibleTypes" : null
       }, {
+        "kind" : "SCALAR",
+        "name" : "ID",
+        "description" : "Built-in ID",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
         "kind" : "ENUM",
         "name" : "DeviceType",
-        "description" : "  enum to represent the different device types available to oralcare",
+        "description" : "  enum to represent the different device types available to gillette",
         "fields" : null,
         "inputFields" : null,
         "interfaces" : null,
         "enumValues" : [ {
-          "name" : "BETAMAX",
+          "name" : "G558",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "BOOMBOX_ALEXA",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "BOOMBOX_GOOGLE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D21_1_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D21_2A_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D21_2B_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D21_3_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D21_3_MODE_WHITENING",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D21_4_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D36_5_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D36_6_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D601_1_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D601_2A_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D601_2B_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D601_3A_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D601_3B_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D601_4_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D601_5_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D700_4_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D700_5_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D700_6_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D701_5_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D701_6_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D706_5_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "D706_6_MODE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "G4",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "G5",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "M6",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "M6_BIGTI",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "M7",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "M7_BIGTI",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "M8",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "M8_BIGTI",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "M9",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "M9_BIGTI",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "SEAGATE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "STARGATE",
+          "name" : "HG2",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
         } ],
         "possibleTypes" : null
       }, {
+        "kind" : "SCALAR",
+        "name" : "AWSDateTime",
+        "description" : "The `AWSDateTime` scalar type provided by AWS AppSync, represents a valid ***extended*** [ISO 8601 DateTime](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) string. In other words, this scalar type accepts datetime strings of the form `YYYY-MM-DDThh:mm:ss.SSSZ`.  The scalar can also accept \"negative years\" of the form `-YYYY` which correspond to years before `0000`. For example, \"**-2017-01-01T00:00Z**\" and \"**-9999-01-01T00:00Z**\" are both valid datetime strings.  The field after the two digit seconds field is a nanoseconds field. It can accept between 1 and 9 digits. So, for example, \"**1970-01-01T12:00:00.2Z**\", \"**1970-01-01T12:00:00.277Z**\" and \"**1970-01-01T12:00:00.123456789Z**\" are all valid datetime strings.  The seconds and nanoseconds fields are optional (the seconds field must be specified if the nanoseconds field is to be used).  The [time zone offset](https://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators) is compulsory for this scalar. The time zone offset must either be `Z` (representing the UTC time zone) or be in the format `±hh:mm:ss`. The seconds field in the timezone offset will be considered valid even though it is not part of the ISO 8601 standard.",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
         "kind" : "ENUM",
         "name" : "DeviceStatus",
-        "description" : "  enum to represent the device state options.",
+        "description" : "  enum to represent the device state options",
         "fields" : null,
         "inputFields" : null,
         "interfaces" : null,
         "enumValues" : [ {
+          "name" : "ERROR",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "FACTORY",
           "description" : null,
           "isDeprecated" : false,
@@ -1059,6 +929,15 @@
         "possibleTypes" : null
       }, {
         "kind" : "SCALAR",
+        "name" : "AWSJSON",
+        "description" : "The `AWSJSON` scalar type provided by AWS AppSync, represents a JSON string that complies with [RFC 8259](https://tools.ietf.org/html/rfc8259).  Maps like \"**{\\\\\"upvotes\\\\\": 10}**\", lists like \"**[1,2,3]**\", and scalar values like \"**\\\\\"AWSJSON example string\\\\\"**\", \"**1**\", and \"**true**\" are accepted as valid JSON and will automatically be parsed and loaded in the resolver mapping templates as Maps, Lists, or Scalar values rather than as the literal input strings.  Invalid JSON strings like \"**{a: 1}**\", \"**{'a': 1}**\" and \"**Unquoted string**\" will throw GraphQL validation errors.",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "SCALAR",
         "name" : "String",
         "description" : "Built-in String",
         "fields" : null,
@@ -1067,9 +946,85 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+        "kind" : "SCALAR",
+        "name" : "Int",
+        "description" : "Built-in Int",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "ENUM",
+        "name" : "FirmwareMode",
+        "description" : "  enum to represent firmware mode",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "HAN",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "OBI",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
+        "kind" : "ENUM",
+        "name" : "HandleDocked",
+        "description" : "  enum to represent handle docked",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "NO",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "YES",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
+        "kind" : "ENUM",
+        "name" : "HandleMode",
+        "description" : "  enum to represent different handle modes",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "DIAGNOSTIC",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "USER_MODE_1",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "USER_MODE_2",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "USER_MODE_3",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
         "kind" : "ENUM",
         "name" : "LogLevel",
-        "description" : " log verbosity",
+        "description" : "  enum to represent different log levels",
         "fields" : null,
         "inputFields" : null,
         "interfaces" : null,
@@ -1174,38 +1129,19 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
-        "kind" : "ENUM",
-        "name" : "VoiceAssistantStatus",
-        "description" : "  enum for voice assistant status",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : [ {
-          "name" : "DISABLED",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "ENABLED",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "possibleTypes" : null
-      }, {
         "kind" : "OBJECT",
-        "name" : "LogConnection",
-        "description" : "  pageable object for device logs",
+        "name" : "DeviceConnection",
+        "description" : "  pageable object for devices",
         "fields" : [ {
           "name" : "items",
-          "description" : "  collection of device logs",
+          "description" : "  collection of devices",
           "args" : [ ],
           "type" : {
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
               "kind" : "OBJECT",
-              "name" : "Log",
+              "name" : "Device",
               "ofType" : null
             }
           },
@@ -1228,126 +1164,13 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
-        "kind" : "OBJECT",
-        "name" : "Log",
-        "description" : "  device log data model for oralcare",
-        "fields" : [ {
-          "name" : "id",
-          "description" : "  log ID",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "consumerId",
-          "description" : "  cognito user GUID",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "message",
-          "description" : "  json object with any schema desired",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "AWSJSON",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "receivedTime",
-          "description" : "  epoch timestamp set by platform",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "AWSDateTime",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "statusCode",
-          "description" : "  Mimics HTTP status codes for specific messages",
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "deviceId",
-          "description" : "  device ID of device in log",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "inputFields" : null,
-        "interfaces" : [ ],
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "SCALAR",
-        "name" : "AWSJSON",
-        "description" : "The `AWSJSON` scalar type provided by AWS AppSync, represents a JSON string that complies with [RFC 8259](https://tools.ietf.org/html/rfc8259).  Maps like \"**{\\\\\"upvotes\\\\\": 10}**\", lists like \"**[1,2,3]**\", and scalar values like \"**\\\\\"AWSJSON example string\\\\\"**\", \"**1**\", and \"**true**\" are accepted as valid JSON and will automatically be parsed and loaded in the resolver mapping templates as Maps, Lists, or Scalar values rather than as the literal input strings.  Invalid JSON strings like \"**{a: 1}**\", \"**{'a': 1}**\" and \"**Unquoted string**\" will throw GraphQL validation errors.",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "TableLogFilterInput",
+        "name" : "TableDeviceFilterInput",
         "description" : "  log data model specific filter object",
         "fields" : null,
         "inputFields" : [ {
-          "name" : "id",
-          "description" : "  filter by log ID",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIDFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "receivedTime",
-          "description" : "  filter by log received time",
+          "name" : "createdBy",
+          "description" : "  filter by createdBy Field",
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "TableStringFilterInput",
@@ -1356,113 +1179,10 @@
           "defaultValue" : null
         }, {
           "name" : "deviceId",
-          "description" : "  filter logs by device ID",
+          "description" : "  filter logs by deviceId",
           "type" : {
             "kind" : "INPUT_OBJECT",
-            "name" : "TableIDFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        } ],
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "INPUT_OBJECT",
-        "name" : "TableIDFilterInput",
-        "description" : "  generic dynamo filter input for ID attributes (serializes to string)",
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "beginsWith",
-          "description" : "  string value starts with value",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "between",
-          "description" : "  between the range of multiple values",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "contains",
-          "description" : "  contains part of value",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "eq",
-          "description" : "  equal",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "ge",
-          "description" : "  greater or equal >=",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "gt",
-          "description" : "  greater than >",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "le",
-          "description" : "  less or equal <=",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "lt",
-          "description" : "  less than <",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "ne",
-          "description" : "  not equal",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "notContains",
-          "description" : "  doesn't contain part of value",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "TableStringFilterInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1575,6 +1295,275 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
+        "name" : "LogConnection",
+        "description" : "  pageable object for device logs",
+        "fields" : [ {
+          "name" : "items",
+          "description" : "  collection of device logs",
+          "args" : [ ],
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "OBJECT",
+              "name" : "Log",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "nextToken",
+          "description" : "  collection Paging token",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "Log",
+        "description" : "  device log data model for gillette",
+        "fields" : [ {
+          "name" : "id",
+          "description" : "  log ID",
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "consumerId",
+          "description" : "  cognito user GUID",
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "message",
+          "description" : "  json object with any schema desired",
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSJSON",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "receivedTime",
+          "description" : "  epoch timestamp set by platform",
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "AWSDateTime",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "statusCode",
+          "description" : "  Mimics HTTP status codes for specific messages",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "deviceId",
+          "description" : "  UUID v4",
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "TableLogFilterInput",
+        "description" : "  log data model specific filter object",
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "id",
+          "description" : "  filter by log ID",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableIDFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "receivedTime",
+          "description" : "  filter by log received time",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableStringFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "deviceId",
+          "description" : "  filter logs by deviceId",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableStringFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "TableIDFilterInput",
+        "description" : "  generic dynamo filter input for ID attributes (serializes to string)",
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "beginsWith",
+          "description" : "  string value starts with value",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "between",
+          "description" : "  between the range of multiple values",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "contains",
+          "description" : "  contains part of value",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "eq",
+          "description" : "  equal",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ge",
+          "description" : "  greater or equal >=",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "gt",
+          "description" : "  greater than >",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "le",
+          "description" : "  less or equal <=",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "lt",
+          "description" : "  less than <",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ne",
+          "description" : "  not equal",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "notContains",
+          "description" : "  doesn't contain part of value",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
         "name" : "Jobs",
         "description" : "  The shape of a list of job summaries for a device",
         "fields" : [ {
@@ -1645,7 +1634,7 @@
           "deprecationReason" : null
         }, {
           "name" : "lastUpdatedAt",
-          "description" : "  The timein milliseconds since the epoch, when the job execution was last updated.",
+          "description" : "  The time, in milliseconds since the epoch, when the job execution was last\n updated.",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
@@ -1744,10 +1733,10 @@
       }, {
         "kind" : "OBJECT",
         "name" : "SessionConnection",
-        "description" : "  pageable object for brushing sessions",
+        "description" : "  pageable object for sessions",
         "fields" : [ {
           "name" : "items",
-          "description" : "  collection of brushing sessions",
+          "description" : "  collection of sessions",
           "args" : [ ],
           "type" : {
             "kind" : "LIST",
@@ -1779,7 +1768,7 @@
       }, {
         "kind" : "OBJECT",
         "name" : "Session",
-        "description" : "  session Data model for oralcare. Toothbrushing session",
+        "description" : "  Session data model for gillette",
         "fields" : [ {
           "name" : "deviceId",
           "description" : "  PLATFORM MANAGED\n device 128bit UUID v4 algorithm",
@@ -1856,7 +1845,7 @@
           "deprecationReason" : null
         }, {
           "name" : "sessionId",
-          "description" : "  unique Id to identify this specific brushing session",
+          "description" : "  unique Id to identify this specific shaving session",
           "args" : [ ],
           "type" : {
             "kind" : "NON_NULL",
@@ -1870,65 +1859,50 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "batteryLevel",
-          "description" : "  DEVICE ATTRIBUTES\n percentage battery remaining at session end: 0-100",
+          "name" : "algoVersion",
+          "description" : "  DEVICE ATTRIBUTES\n version of processing algorithm used to create session",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
-            "name" : "Int",
+            "name" : "String",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "brushModel",
-          "description" : "  hex code of handle model, from BLE specification docs (Decimal converted version of hex code: ex. 0x22 --> 34)",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "brushScore",
-          "description" : "  computed brushing score based on algorithms: 0-100",
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "brushingDuration",
-          "description" : "  in seconds, from handle BLE",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "cleanTongue",
-          "description" : "  user polled question: Did you clean your tongue? (Disabled = 0, 1 = no, 2 = yes)",
+          "name" : "cartridgeChange",
+          "description" : "  indicates if a blade change occurred during this session",
           "args" : [ ],
           "type" : {
             "kind" : "ENUM",
-            "name" : "UserPoll",
+            "name" : "CartridgeChange",
             "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "cartridgeChangeStatus",
+          "description" : "  indicates if a cartridge change event has been confirmed/rejected by the consumer",
+          "args" : [ ],
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "CartridgeChangeStatus",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "cartridgeUse",
+          "description" : "  number of razor sessions on current cartridge",
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -1955,30 +1929,19 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "coveragePercentage",
-          "description" : "  score generated from coverage data and run through an algorithm",
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "flossTeeth",
-          "description" : "  user polled question: Did you floss? (Disabled = 0, 1 = no, 2 = yes)",
+          "name" : "diagnosticResult",
+          "description" : "  indicates if a session is from a diagnostic shave or regular shave",
           "args" : [ ],
           "type" : {
             "kind" : "ENUM",
-            "name" : "UserPoll",
+            "name" : "DiagnosticResult",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "gatewayModel",
-          "description" : "  hex code of gateway model, from Bluetooth specification docs (Decimal converted version of hex code: ex. 0xB1 --> 177)",
+          "name" : "errorCode",
+          "description" : "  error code of processing algorithm",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
@@ -1988,43 +1951,39 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "gumBleeding",
-          "description" : "  user polled question: Did you have gum bleeding? (DISABLED, NO, YES)",
+          "name" : "errorMessage",
+          "description" : "  error message of processing algorithm",
           "args" : [ ],
           "type" : {
-            "kind" : "ENUM",
-            "name" : "UserPoll",
+            "kind" : "SCALAR",
+            "name" : "String",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "handleSessionId",
-          "description" : "  from handle BLE, session identifier",
+          "name" : "handleMode",
+          "description" : "  current user set mode",
           "args" : [ ],
           "type" : {
             "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
+              "kind" : "ENUM",
+              "name" : "HandleMode",
               "ofType" : null
             }
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "onEventCount",
-          "description" : "  total times motor was turned on during session",
+          "name" : "modelVersion",
+          "description" : "  model that was used to analyze the raw sensor payload",
           "args" : [ ],
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2051,30 +2010,30 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "parentDeviceId",
-          "description" : "  gateway device 128bit UUID v4 algorithm",
+          "name" : "percentageOverThreshold",
+          "description" : "  percentage of stroke peak values over threshold 2",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "Float",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "pressureDistribution",
-          "description" : "  every second is represented with a character: (under pressure = 1, good pressure = 5, over pressure = 9)",
+          "name" : "percentageOverThresholdByStroke",
+          "description" : "  percentage of stroke peak values over threshold by stroke",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "Float",
             "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "pressureDuration",
-          "description" : "  over pressure time in seconds, from handle BLE.",
+          "name" : "sessionDuration",
+          "description" : "  duration of session in seconds",
           "args" : [ ],
           "type" : {
             "kind" : "NON_NULL",
@@ -2084,47 +2043,6 @@
               "name" : "Int",
               "ofType" : null
             }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "pressureEventCount",
-          "description" : "  total times high pressure was triggered during session",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "primaryBrushingMode",
-          "description" : "  brush mode that was used most during session",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "BrushingMode",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "rinseMouth",
-          "description" : "  user polled question: Did you rinse? (DISABLED, NO, YES)",
-          "args" : [ ],
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "UserPoll",
-            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2144,23 +2062,8 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "sessionType",
-          "description" : "  where the session is coming from",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "SessionType",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "zonedBrushTime",
-          "description" : "  map of [zone duration], [topLeft, topCenter, topRight, bottomLeft, bottomCenter, bottomRight, none]",
+          "name" : "sessionStrokes",
+          "description" : "  array of mean peak pressure value for each stroke - length of array is same as number of strokes",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
@@ -2170,8 +2073,89 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+          "name" : "sessionStrokesDuration",
+          "description" : "  duration of session between first and last strokes",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "sessionStrokesStats",
+          "description" : "  other stroke metrics from processing algorithm",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "sessionStrokeCount",
+          "description" : "  number of strokes during session",
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Int",
+              "ofType" : null
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "sessionType",
+          "description" : "  classification of the shave session",
+          "args" : [ ],
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "SessionType",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "threshold1",
+          "description" : "  grams of pressure required to indicate minimum pressure required for stroke",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "threshold2",
+          "description" : "  grams of pressure required to indicate too much pressure",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "zonedPressureTime",
-          "description" : "  map of [zone duration], [topLeft, topCenter, topRight, bottomLeft, bottomCenter, bottomRight, none]",
+          "description" : "  map of [zone: duration], duration is Float",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "zonedRepeatTime",
+          "description" : "  map of [zone: duration], duration is Float",
           "args" : [ ],
           "type" : {
             "kind" : "SCALAR",
@@ -2187,23 +2171,37 @@
         "possibleTypes" : null
       }, {
         "kind" : "ENUM",
-        "name" : "UserPoll",
-        "description" : "  enum for user polled question",
+        "name" : "CartridgeChange",
+        "description" : "  status of cartridge eject",
         "fields" : null,
         "inputFields" : null,
         "interfaces" : null,
         "enumValues" : [ {
-          "name" : "DISABLED",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
           "name" : "NO",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
           "name" : "YES",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
+        "kind" : "ENUM",
+        "name" : "CartridgeChangeStatus",
+        "description" : "  status of cartridge eject confirmation",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "CONFIRMED",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "REJECTED",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2222,17 +2220,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "ORALB_BETAMAX",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "ORALB_CONNECT",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "ORALB_MAPP",
+          "name" : "SMART_SHAVER",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2240,53 +2228,23 @@
         "possibleTypes" : null
       }, {
         "kind" : "ENUM",
-        "name" : "BrushingMode",
-        "description" : "  enum to represent different brushing modes",
+        "name" : "DiagnosticResult",
+        "description" : "  enum to represent different diagnostic results",
         "fields" : null,
         "inputFields" : null,
         "interfaces" : null,
         "enumValues" : [ {
-          "name" : "DAILY_CLEAN",
+          "name" : "USER_MODE_1",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "DEEP_CLEAN",
+          "name" : "USER_MODE_2",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "MASSAGE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "OFF",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "PRO_CLEAN",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "SENSITIVE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "SUPER_SENSITIVE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "TONGUE_CLEAN",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "WHITENING",
+          "name" : "USER_MODE_3",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2295,62 +2253,27 @@
       }, {
         "kind" : "ENUM",
         "name" : "SessionType",
-        "description" : "  enum for session type",
+        "description" : "  possible types of sessions",
         "fields" : null,
         "inputFields" : null,
         "interfaces" : null,
         "enumValues" : [ {
-          "name" : "COMINO",
+          "name" : "CARTRIDGE_REFILL",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "COMINO_CLOUD",
+          "name" : "DIAGNOSTIC",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "COMINO_REMOTE",
+          "name" : "ERROR",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "DZM",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "GATEWAY",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "GATEWAY_COMINO",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "GATEWAY_GOZO",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "GOZO",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "GOZO_REMOTE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "OFFLINE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "TIMER",
+          "name" : "GUIDED",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2362,11 +2285,74 @@
         "description" : "  session data model specific filter object",
         "fields" : null,
         "inputFields" : [ {
+          "name" : "cartridgeChange",
+          "description" : "  filter by cartridgeChange",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableStringFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "cartridgeUse",
+          "description" : "  filter by cartridgeUse",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableIntFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "consumerId",
+          "description" : "  filter by consumerId",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableIDFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "deviceId",
           "description" : "  filter by deviceId",
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "TableIDFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handleMode",
+          "description" : "  filter by handleMode",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableStringFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "percentageOverThreshold",
+          "description" : "  filter by percentageOverThreshold",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableFloatFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "percentageOverThresholdByStroke",
+          "description" : "  filter by percentageOverThresholdByStroke",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableFloatFilterInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "sessionDuration",
+          "description" : "  filter by sessionDuration",
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "TableIntFilterInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -2380,62 +2366,8 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "batteryLevel",
-          "description" : "  filter by batteryLevel",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIntFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "brushScore",
-          "description" : "  filter by brushScore",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIntFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "brushingDuration",
-          "description" : "  filter by brushingDuration",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIntFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "cleanTongue",
-          "description" : "  filter by cleanTongue",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIntFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "coveragePercentage",
-          "description" : "  filter by coveragePercentage",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableFloatFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "flossTeeth",
-          "description" : "  filter by flossTeeth",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIntFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
           "name" : "sessionStartTime",
-          "description" : "  filter by SessionStartTime",
+          "description" : "  filter by sessionStartTime",
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "TableStringFilterInput",
@@ -2443,8 +2375,8 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "gumBleeding",
-          "description" : "  filter by gumBleeding",
+          "name" : "sessionStrokeCount",
+          "description" : "  filter by sessionStrokeCount",
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "TableIntFilterInput",
@@ -2452,8 +2384,8 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "handleSessionId",
-          "description" : "  filter by handleSessionId",
+          "name" : "threshold1",
+          "description" : "  filter by threshold1",
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "TableIntFilterInput",
@@ -2461,62 +2393,8 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "onEventCount",
-          "description" : "  filter by onEventCount",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIntFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "parentDeviceId",
-          "description" : "  gateway device 128bit UUID v4 algorithm",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIDFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "pressureDistribution",
-          "description" : "  filter by pressureDistribution",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableStringFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "pressureDuration",
-          "description" : "  filter by pressureDuration",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIntFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "pressureEventCount",
-          "description" : "  filter by pressureEventCount",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIntFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "primaryBrushingMode",
-          "description" : "  filter by primaryBrushingMode",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableStringFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "rinseMouth",
-          "description" : "  filter by rinseMouth",
+          "name" : "threshold2",
+          "description" : "  filter by threshold2",
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "TableIntFilterInput",
@@ -2716,40 +2594,39 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
-        "kind" : "ENUM",
-        "name" : "Sort",
-        "description" : " enum to sort sessions by asc or desc",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : [ {
-          "name" : "ASC",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "DESC",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "possibleTypes" : null
-      }, {
         "kind" : "OBJECT",
         "name" : "User",
         "description" : "  data model representing the user",
         "fields" : [ {
+          "name" : "cartridgeCount",
+          "description" : "  count of cartridges in consumer inventory",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "cartridgeLifeThresholds",
+          "description" : "  user set thresholds for blade tracker",
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "consumerId",
           "description" : "  unique Id generated by Cognito",
           "args" : [ ],
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2791,13 +2668,9 @@
           "description" : "  key identifier for user account",
           "args" : [ ],
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "AWSEmail",
-              "ofType" : null
-            }
+            "kind" : "SCALAR",
+            "name" : "AWSEmail",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2865,6 +2738,25 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+          "name" : "subscriptions",
+          "description" : "  what subscriptions the user has setup",
+          "args" : [ ],
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "OBJECT",
+                "name" : "SubscriptionService",
+                "ofType" : null
+              }
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "termsAndConditions",
           "description" : "  terms and conditions",
           "args" : [ ],
@@ -2887,40 +2779,13 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "subscriptions",
-          "description" : "  what subscriptions the user has setup",
+          "name" : "userSurvey",
+          "description" : "  user input",
           "args" : [ ],
           "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "OBJECT",
-                "name" : "SubscriptionService",
-                "ofType" : null
-              }
-            }
-          },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `replenishment`"
-        }, {
-          "name" : "replenishmentServices",
-          "description" : "  what replenishments the user has setup",
-          "args" : [ ],
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "OBJECT",
-                "name" : "ReplenishmentService",
-                "ofType" : null
-              }
-            }
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2955,22 +2820,7 @@
         "inputFields" : null,
         "interfaces" : null,
         "enumValues" : [ {
-          "name" : "HABIT_TRACKING_COACHING_PUSH",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "MARKETING_PROMOTIONS_EMAIL",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "ORAL_CARE_REPORTS_EMAIL",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "PRODUCT_UPDATES_FEATURES_EMAIL",
+          "name" : "BLADE_CHANGE_PUSH",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -2988,7 +2838,7 @@
       }, {
         "kind" : "OBJECT",
         "name" : "SubscriptionService",
-        "description" : "  replenishment service data model for oral care",
+        "description" : "  replenishment service data model for grooming",
         "fields" : [ {
           "name" : "subscriptionId",
           "description" : "  replenishment service generated ID",
@@ -3002,8 +2852,8 @@
               "ofType" : null
             }
           },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `replenishment`"
+          "isDeprecated" : false,
+          "deprecationReason" : null
         }, {
           "name" : "subscriptionType",
           "description" : "  replenishment service type",
@@ -3017,8 +2867,8 @@
               "ofType" : null
             }
           },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `replenishment`"
+          "isDeprecated" : false,
+          "deprecationReason" : null
         }, {
           "name" : "nextOrderDate",
           "description" : "  next date order will be placed to replenishment service",
@@ -3028,8 +2878,8 @@
             "name" : "AWSDateTime",
             "ofType" : null
           },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `replenishment`"
+          "isDeprecated" : false,
+          "deprecationReason" : null
         }, {
           "name" : "status",
           "description" : "  current status of replenishment",
@@ -3043,124 +2893,6 @@
               "ofType" : null
             }
           },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `replenishment`"
-        }, {
-          "name" : "productId",
-          "description" : "  identifier for the product being ordered",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `replenishment`"
-        } ],
-        "inputFields" : null,
-        "interfaces" : [ ],
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "ENUM",
-        "name" : "SubscriptionType",
-        "description" : "  enum to represent the values of replenishment type, replaced by replenishment",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : [ {
-          "name" : "DRS",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "ORALB_CONNECT_CLUB",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "possibleTypes" : null
-      }, {
-        "kind" : "ENUM",
-        "name" : "SubscriptionStatus",
-        "description" : "  enum to represent the values of replenishment status, replaced by replenishment",
-        "fields" : null,
-        "inputFields" : null,
-        "interfaces" : null,
-        "enumValues" : [ {
-          "name" : "ACTIVE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "INACTIVE",
-          "description" : null,
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "possibleTypes" : null
-      }, {
-        "kind" : "OBJECT",
-        "name" : "ReplenishmentService",
-        "description" : "  Replenishment service data model for oral care",
-        "fields" : [ {
-          "name" : "replenishmentId",
-          "description" : "  Replenishment service generated ID",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "replenishmentType",
-          "description" : "  replenishment service type",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "ReplenishmentType",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "nextOrderDate",
-          "description" : "  next date order will be placed to replenishment service",
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "AWSDateTime",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "status",
-          "description" : "  current status of replenishment",
-          "args" : [ ],
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "ReplenishmentStatus",
-              "ofType" : null
-            }
-          },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
@@ -3175,17 +2907,6 @@
               "name" : "String",
               "ofType" : null
             }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "quantity",
-          "description" : "  the quantity of items contained in the productId",
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
           },
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -3196,7 +2917,7 @@
         "possibleTypes" : null
       }, {
         "kind" : "ENUM",
-        "name" : "ReplenishmentType",
+        "name" : "SubscriptionType",
         "description" : "  enum to represent the values of replenishment type",
         "fields" : null,
         "inputFields" : null,
@@ -3207,7 +2928,7 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "ORALB_CONNECT_CLUB",
+          "name" : "GILLETTE_ON_DEMAND",
           "description" : null,
           "isDeprecated" : false,
           "deprecationReason" : null
@@ -3215,8 +2936,8 @@
         "possibleTypes" : null
       }, {
         "kind" : "ENUM",
-        "name" : "ReplenishmentStatus",
-        "description" : "  enum to represent the values of Replenishment status",
+        "name" : "SubscriptionStatus",
+        "description" : "  enum to represent the values of replenishment status",
         "fields" : null,
         "inputFields" : null,
         "interfaces" : null,
@@ -3234,73 +2955,11 @@
         "possibleTypes" : null
       }, {
         "kind" : "OBJECT",
-        "name" : "ConsumableConnection",
-        "description" : "  pageable object for consumables",
-        "fields" : [ {
-          "name" : "items",
-          "description" : "  collection of consumables",
-          "args" : [ ],
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "OBJECT",
-              "name" : "Consumable",
-              "ofType" : null
-            }
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "nextToken",
-          "description" : "  collection Paging token",
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        } ],
-        "inputFields" : null,
-        "interfaces" : [ ],
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "INPUT_OBJECT",
-        "name" : "TableConsumableFilterInput",
-        "description" : "  Consumable data model specific filter object",
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "deviceId",
-          "description" : "  filter consumables by device ID",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableIDFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "state",
-          "description" : "  current state of the consumable, when a new consumable is created our mutation will automatically set this to IN_USE and set previous consumable to USED.",
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "TableStringFilterInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        } ],
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "OBJECT",
         "name" : "Mutation",
         "description" : "  graphql mutations: anything that creates or updates",
         "fields" : [ {
-          "name" : "createConsumable",
-          "description" : "  creates a consumable for the device",
+          "name" : "claimDevice",
+          "description" : "  claims a razor device for a specific user",
           "args" : [ {
             "name" : "deviceId",
             "description" : null,
@@ -3327,36 +2986,34 @@
               }
             },
             "defaultValue" : null
-          }, {
-            "name" : "startDate",
+          } ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "Device",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "rejectCartridgeEject",
+          "description" : "  rejects cartridge eject for given session and modifies subsequent sessions' cartridgeUse values",
+          "args" : [ {
+            "name" : "sessionId",
             "description" : null,
             "type" : {
               "kind" : "NON_NULL",
               "name" : null,
               "ofType" : {
                 "kind" : "SCALAR",
-                "name" : "AWSDateTime",
-                "ofType" : null
-              }
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "consumableType",
-            "description" : null,
-            "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "ENUM",
-                "name" : "ConsumableType",
+                "name" : "ID",
                 "ofType" : null
               }
             },
             "defaultValue" : null
           } ],
           "type" : {
-            "kind" : "OBJECT",
-            "name" : "Consumable",
+            "kind" : "SCALAR",
+            "name" : "String",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -3494,15 +3151,6 @@
               "ofType" : null
             },
             "defaultValue" : null
-          }, {
-            "name" : "configType",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            },
-            "defaultValue" : null
           } ],
           "type" : {
             "kind" : "SCALAR",
@@ -3518,13 +3166,9 @@
             "name" : "input",
             "description" : null,
             "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "INPUT_OBJECT",
-                "name" : "CancelJobInput",
-                "ofType" : null
-              }
+              "kind" : "INPUT_OBJECT",
+              "name" : "CancelJobInput",
+              "ofType" : null
             },
             "defaultValue" : null
           } ],
@@ -3537,7 +3181,7 @@
           "deprecationReason" : null
         }, {
           "name" : "createSession",
-          "description" : "  creates a new brushing session",
+          "description" : "  creates a new session",
           "args" : [ {
             "name" : "input",
             "description" : null,
@@ -3603,65 +3247,6 @@
             "name" : "SubscriptionService",
             "ofType" : null
           },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `replenishment`"
-        }, {
-          "name" : "createReplenishment",
-          "description" : "  Creates a replenishment for the user based on the type provided",
-          "args" : [ {
-            "name" : "refreshToken",
-            "description" : null,
-            "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "clientId",
-            "description" : null,
-            "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "serialNumber",
-            "description" : null,
-            "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "replenishmentType",
-            "description" : null,
-            "type" : {
-              "kind" : "ENUM",
-              "name" : "ReplenishmentType",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          } ],
-          "type" : {
-            "kind" : "OBJECT",
-            "name" : "ReplenishmentService",
-            "ofType" : null
-          },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
@@ -3703,7 +3288,7 @@
           "deprecationReason" : null
         }, {
           "name" : "deleteSession",
-          "description" : "  deletes a applicator session from a user's account",
+          "description" : "  deletes a session from a user's account",
           "args" : [ {
             "name" : "sessionId",
             "description" : null,
@@ -3712,7 +3297,7 @@
               "name" : null,
               "ofType" : {
                 "kind" : "SCALAR",
-                "name" : "String",
+                "name" : "ID",
                 "ofType" : null
               }
             },
@@ -3747,30 +3332,6 @@
             "name" : "String",
             "ofType" : null
           },
-          "isDeprecated" : true,
-          "deprecationReason" : "Use `replenishment`"
-        }, {
-          "name" : "deleteReplenishment",
-          "description" : "  delete the user from the replenishment service",
-          "args" : [ {
-            "name" : "replenishmentId",
-            "description" : null,
-            "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "ID",
-                "ofType" : null
-              }
-            },
-            "defaultValue" : null
-          } ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
@@ -3788,7 +3349,7 @@
           "name" : "placeOrder",
           "description" : "  Tells the replenishment to place an order immediately. This will also reset the next order date",
           "args" : [ {
-            "name" : "replenishmentId",
+            "name" : "subscriptionId",
             "description" : null,
             "type" : {
               "kind" : "NON_NULL",
@@ -3809,10 +3370,10 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "updateConsumable",
-          "description" : "  updates an existing consumable",
+          "name" : "unclaimDevice",
+          "description" : "  removes a razor device from a specific user",
           "args" : [ {
-            "name" : "consumableId",
+            "name" : "deviceId",
             "description" : null,
             "type" : {
               "kind" : "NON_NULL",
@@ -3825,54 +3386,22 @@
             },
             "defaultValue" : null
           }, {
-            "name" : "startDate",
+            "name" : "deviceType",
             "description" : null,
             "type" : {
-              "kind" : "SCALAR",
-              "name" : "AWSDateTime",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "consumableType",
-            "description" : null,
-            "type" : {
-              "kind" : "ENUM",
-              "name" : "ConsumableType",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "state",
-            "description" : null,
-            "type" : {
-              "kind" : "ENUM",
-              "name" : "ConsumableState",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "totalSessionCount",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "totalSessionDurationSeconds",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "ENUM",
+                "name" : "DeviceType",
+                "ofType" : null
+              }
             },
             "defaultValue" : null
           } ],
           "type" : {
-            "kind" : "OBJECT",
-            "name" : "Consumable",
+            "kind" : "SCALAR",
+            "name" : "String",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -3913,90 +3442,6 @@
           "type" : {
             "kind" : "OBJECT",
             "name" : "User",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
-          "name" : "updateSession",
-          "description" : "  updates device id or parent device id on the Session",
-          "args" : [ {
-            "name" : "sessionId",
-            "description" : null,
-            "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "ID",
-                "ofType" : null
-              }
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "deviceId",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "deviceType",
-            "description" : null,
-            "type" : {
-              "kind" : "ENUM",
-              "name" : "DeviceType",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "parentDeviceId",
-            "description" : null,
-            "type" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          }, {
-            "name" : "parentDeviceType",
-            "description" : null,
-            "type" : {
-              "kind" : "ENUM",
-              "name" : "DeviceType",
-              "ofType" : null
-            },
-            "defaultValue" : null
-          } ],
-          "type" : {
-            "kind" : "OBJECT",
-            "name" : "Session",
-            "ofType" : null
-          },
-          "isDeprecated" : true,
-          "deprecationReason" : "migrate to `updateBrushingSession`"
-        }, {
-          "name" : "updateBrushingSession",
-          "description" : "  updates device id or parent device id on the Session",
-          "args" : [ {
-            "name" : "input",
-            "description" : null,
-            "type" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "INPUT_OBJECT",
-                "name" : "UpdateSessionInput",
-                "ofType" : null
-              }
-            },
-            "defaultValue" : null
-          } ],
-          "type" : {
-            "kind" : "OBJECT",
-            "name" : "Session",
             "ofType" : null
           },
           "isDeprecated" : false,
@@ -4153,22 +3598,9 @@
       }, {
         "kind" : "INPUT_OBJECT",
         "name" : "CreateSessionInput",
-        "description" : "  input Object for creating a new brushing session",
+        "description" : "  input Object for creating a new shave session",
         "fields" : null,
         "inputFields" : [ {
-          "name" : "consumerId",
-          "description" : "  DEPRECATED - This value will be removed in the future. It has no effect.",
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
           "name" : "deviceId",
           "description" : "  PLATFORM MANAGED\n device 128bit UUID v4 algorithm",
           "type" : {
@@ -4218,8 +3650,8 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "sessionId",
-          "description" : "  unique Id to identify this specific brushing session",
+          "name" : "consumerId",
+          "description" : "  PLATFORM REQUIRED\n unique Id generated by Cognito",
           "type" : {
             "kind" : "NON_NULL",
             "name" : null,
@@ -4231,55 +3663,33 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "batteryLevel",
-          "description" : "  DEVICE ATTRIBUTES\n percentage battery remaining at session end: 0-100",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "brushingDuration",
-          "description" : "  seconds, from handle BLE",
+          "name" : "sessionId",
+          "description" : "  unique Id to identify this specific shaving session",
           "type" : {
             "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
               "kind" : "SCALAR",
-              "name" : "Int",
+              "name" : "ID",
               "ofType" : null
             }
           },
           "defaultValue" : null
         }, {
-          "name" : "brushModel",
-          "description" : "  hex code of handle model, from BLE specification docs (Decimal converted version of hex code: ex. 0x22 --> 34)",
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "brushScore",
-          "description" : "  computed brushing score based on algorithms: 0-100",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "cleanTongue",
-          "description" : "  user polled question: Did you clean your tongue?",
+          "name" : "cartridgeChange",
+          "description" : "  DEVICE ATTRIBUTES\nindicates if a blade change occurred during this session",
           "type" : {
             "kind" : "ENUM",
-            "name" : "UserPoll",
+            "name" : "CartridgeChange",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "cartridgeUse",
+          "description" : "  number of razor sessions on current cartridge",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
             "ofType" : null
           },
           "defaultValue" : null
@@ -4302,65 +3712,30 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "coveragePercentage",
-          "description" : "  score generated from coverage data and run through an algorithm",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "flossTeeth",
-          "description" : "  user polled question: Did you floss?",
+          "name" : "diagnosticResult",
+          "description" : "  indicates if a session is from a diagnostic shave or regular shave",
           "type" : {
             "kind" : "ENUM",
-            "name" : "UserPoll",
+            "name" : "DiagnosticResult",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "gatewayModel",
-          "description" : "  hex code of gateway model, from Bluetooth specification docs (Decimal converted version of hex code: ex. 0xB1 --> 177)",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "gumBleeding",
-          "description" : "  user polled question: Did you have gum bleeding?",
+          "name" : "handleMode",
+          "description" : "  current user set mode",
           "type" : {
             "kind" : "ENUM",
-            "name" : "UserPoll",
+            "name" : "HandleMode",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "handleSessionId",
-          "description" : "  from handle BLE, session identifier",
+          "name" : "modelVersion",
+          "description" : "  model that was used to analyze the raw sensor payload",
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "onEventCount",
-          "description" : "  total times motor was turned on during session",
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
           },
           "defaultValue" : null
         }, {
@@ -4382,68 +3757,29 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "parentDeviceId",
-          "description" : "  gateway device 128bit UUID v4 algorithm",
+          "name" : "percentageOverThreshold",
+          "description" : "  percentage of stroke peak values over threshold 2",
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "Float",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "pressureDistribution",
-          "description" : "  every second is represented with a character: (under pressure = 1, good pressure = 5, over pressure = 9)",
+          "name" : "percentageOverThresholdByStroke",
+          "description" : "  percentage of stroke peak values over threshold  by stroke",
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "Float",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "pressureDuration",
-          "description" : "  over pressure time in seconds, from handle BLE",
+          "name" : "sessionDuration",
+          "description" : "  duration of session in seconds",
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "pressureEventCount",
-          "description" : "  total times high pressure was triggered during session",
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Int",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "primaryBrushingMode",
-          "description" : "  brush mode that was used most during session",
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "BrushingMode",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "rinseMouth",
-          "description" : "  user polled question: Did you rinse?",
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "UserPoll",
+            "kind" : "SCALAR",
+            "name" : "Int",
             "ofType" : null
           },
           "defaultValue" : null
@@ -4451,31 +3787,14 @@
           "name" : "sessionStartTime",
           "description" : "  start time of session provided by gateway (app, charger, etc.) as ISO 8601 Time string (Use UTC if timezone is unknown - apps should check timezone before sending session data to account for traveling users)",
           "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "AWSDateTime",
-              "ofType" : null
-            }
+            "kind" : "SCALAR",
+            "name" : "AWSDateTime",
+            "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "sessionType",
-          "description" : "  where the session is coming from",
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "ENUM",
-              "name" : "SessionType",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "zonedBrushTime",
-          "description" : "  map of [zone duration], [topLeft, topCenter, topRight, bottomLeft, bottomCenter, bottomRight, none]",
+          "name" : "sessionStrokes",
+          "description" : "  array of mean peak pressure value for each stroke - length of array is same as number of strokes",
           "type" : {
             "kind" : "SCALAR",
             "name" : "AWSJSON",
@@ -4483,8 +3802,44 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "sessionStrokeCount",
+          "description" : "  number of strokes during session",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "threshold1",
+          "description" : "  grams of pressure required to indicate minimum pressure required for stroke",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "threshold2",
+          "description" : "  grams of pressure required to indicate too much pressure",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "zonedPressureTime",
-          "description" : "  map of [zone duration], [topLeft, topCenter, topRight, bottomLeft, bottomCenter, bottomRight, none]",
+          "description" : "  map of [zone: duration], duration is Float",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "zonedRepeatTime",
+          "description" : "  map of [zone: duration], duration is Float",
           "type" : {
             "kind" : "SCALAR",
             "name" : "AWSJSON",
@@ -4581,44 +3936,35 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "brushHeadDate",
-          "description" : "  DEVICE ATTRIBUTES\n ISO-8601 Datetime that the brushhead was installed",
+          "name" : "baseConnectColor",
+          "description" : "  DEVICE ATTRIBUTES\n (JSON array) LED color of base when connecting to cloud",
           "type" : {
             "kind" : "SCALAR",
-            "name" : "AWSDateTime",
+            "name" : "AWSJSON",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "firmwareVersion",
-          "description" : "  firmware version of the device",
+          "name" : "baseDockedColor",
+          "description" : "  (JSON array) LED color when razor is docked with full charge",
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "AWSJSON",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "logLevel",
-          "description" : "  log verbosity",
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "LogLevel",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "macAddress",
-          "description" : "  unique MAC Address for the device if applicable",
+          "name" : "baseDownloadColor",
+          "description" : "  (JSON array) LED color when downloading data",
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "AWSJSON",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "name",
-          "description" : "  user given device name",
+          "name" : "baseFirmwareVersion",
+          "description" : "  current firmware version on the base",
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
@@ -4626,35 +3972,26 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "operatingSystem",
-          "description" : "  operating system of client connecting to lightyear",
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "OperatingSystem",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "operatingSystemVersion",
-          "description" : "  operating system version of client connecting to lightyear",
+          "name" : "baseReadyColor",
+          "description" : "  (JSON array) LED when ready to process",
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "AWSJSON",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "parentDeviceId",
-          "description" : "  gateway device 128bit UUID v4 algorithm",
+          "name" : "baseUploadColor",
+          "description" : "  (JSON array) LED color when uploading data",
           "type" : {
             "kind" : "SCALAR",
-            "name" : "ID",
+            "name" : "AWSJSON",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "protocolVersion",
-          "description" : "  protocol version from bluetooth specification as defined by P&G(decimal converted version of hex code)",
+          "name" : "batteryLevel",
+          "description" : "  battery level",
           "type" : {
             "kind" : "SCALAR",
             "name" : "Int",
@@ -4662,8 +3999,17 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "ringColor",
-          "description" : "  hex code",
+          "name" : "cartridgeUse",
+          "description" : "  number of cartridges used",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "cellBand",
+          "description" : "  gives information about the currently used band",
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
@@ -4671,20 +4017,263 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "ssid",
-          "description" : "  wifi network name",
+          "name" : "cellDetail",
+          "description" : "  cell tower information",
           "type" : {
             "kind" : "SCALAR",
-            "name" : "String",
+            "name" : "AWSJSON",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
-          "name" : "voiceAssistantConfigured",
-          "description" : "  voice assistant has been setup by end user",
+          "name" : "cellStrength",
+          "description" : "  cell tower signal strength",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "displayBrightness",
+          "description" : "  display brightness",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "firmwareMode",
+          "description" : "  model used to analyze the sensor data",
           "type" : {
             "kind" : "ENUM",
-            "name" : "VoiceAssistantStatus",
+            "name" : "FirmwareMode",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handleChargingColor",
+          "description" : "  (JSON array) LED color while charging",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handleDocked",
+          "description" : "  if the base detects the handle",
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "HandleDocked",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handleDockedColor",
+          "description" : "  (JSON array) LED color when ready full of charge and docked",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handleDownloadColor",
+          "description" : "  (JSON array) LED color while downloading data",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handleFirmwareVersion",
+          "description" : "  current firmware version on the handle",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handleId",
+          "description" : "  handle ID (96bit)",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "ID",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handleMode",
+          "description" : "  handle mode",
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "HandleMode",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handlePressureHighColor",
+          "description" : "  LED indicating load (more than thresh_2, red)",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handlePressureLowColor",
+          "description" : "  LED indicating load (more than thresh_1, green)",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "handlePressureMedColor",
+          "description" : "  LED indicating load (less than thresh_1, dim green)",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "heaterLevel",
+          "description" : "  heater level",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "lastCartridgeReplacement",
+          "description" : "  date of most recent cartridge change as ISO 8601 date time string",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSDateTime",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "logLevel",
+          "description" : "  log level",
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "LogLevel",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "memoryUsed",
+          "description" : "  memory capacity used",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "pressureBaseline",
+          "description" : "  baseline value from CALC_PRESSURE",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "pressureHysteresis",
+          "description" : "  hysterisis difference",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "pressureThreshold1",
+          "description" : "  grams of load required to light up led",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "pressureThreshold2",
+          "description" : "  grams of load for green to red",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "pressureThreshold2ModeHigh",
+          "description" : "  calculated threshold from diagnostic + 1000",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "pressureThreshold2ModeLow",
+          "description" : "  calculated threshold from diagnostic - 1000",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "pressureThreshold2ModeMedium",
+          "description" : "  calculated threshold from diagnostic",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "pressureThresholdStroke",
+          "description" : "  grams of load required to be considered a stroke",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "sensorRangeAcceleration",
+          "description" : "  accelerometer mode",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "sensorRangeGyro",
+          "description" : "  gyroscope mode",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "sensorRangeMag",
+          "description" : "  magnetometer mode",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
             "ofType" : null
           },
           "defaultValue" : null
@@ -4698,6 +4287,33 @@
         "description" : "  input type to update the user data",
         "fields" : null,
         "inputFields" : [ {
+          "name" : "cartridgeCount",
+          "description" : "  count of cartridges in consumer inventory",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "cartridgeLifeThresholds",
+          "description" : "  user set thresholds for blade tracker",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "doNotSell",
+          "description" : "  consumer does not want data to be sold",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "familyName",
           "description" : "  last name from Cognito",
           "type" : {
@@ -4717,7 +4333,7 @@
           "defaultValue" : null
         }, {
           "name" : "email",
-          "description" : "  email from cognito - you MUST implement the verify email flow in your application",
+          "description" : "  email from cognito",
           "type" : {
             "kind" : "SCALAR",
             "name" : "AWSEmail",
@@ -4740,9 +4356,13 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "ENUM",
-              "name" : "NotificationPreference",
-              "ofType" : null
+              "kind" : "NON_NULL",
+              "name" : null,
+              "ofType" : {
+                "kind" : "ENUM",
+                "name" : "NotificationPreference",
+                "ofType" : null
+              }
             }
           },
           "defaultValue" : null
@@ -4752,6 +4372,15 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "AWSPhone",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "userSurvey",
+          "description" : "  answers to shaving profile",
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "AWSJSON",
             "ofType" : null
           },
           "defaultValue" : null
@@ -4770,91 +4399,6 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        } ],
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "INPUT_OBJECT",
-        "name" : "UpdateSessionInput",
-        "description" : "  input type to update the session",
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "sessionId",
-          "description" : "  the session to update",
-          "type" : {
-            "kind" : "NON_NULL",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "ID",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "deviceId",
-          "description" : "  device 128bit UUID v4 algorithm",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "deviceType",
-          "description" : "  hardware model as defined by the internal engineering name/number",
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "DeviceType",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "parentDeviceId",
-          "description" : "  device 128bit UUID v4 algorithm - ID of gateway device",
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "ID",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "parentDeviceType",
-          "description" : "  hardware model as defined by the internal engineering name/number of gateway device",
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "DeviceType",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "cleanTongue",
-          "description" : "  user polled question: Did you clean your tongue?",
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "UserPoll",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "flossTeeth",
-          "description" : "  user polled question: Did you floss?",
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "UserPoll",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "rinseMouth",
-          "description" : "  user polled question: Did you rinse?",
-          "type" : {
-            "kind" : "ENUM",
-            "name" : "UserPoll",
             "ofType" : null
           },
           "defaultValue" : null
@@ -5760,23 +5304,6 @@
         "onFragment" : false,
         "onField" : true
       }, {
-        "name" : "deprecated",
-        "description" : null,
-        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
-        "args" : [ {
-          "name" : "reason",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : "\"No longer supported\""
-        } ],
-        "onOperation" : false,
-        "onFragment" : false,
-        "onField" : false
-      }, {
         "name" : "aws_cognito_user_pools",
         "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
@@ -5868,6 +5395,23 @@
         "description" : "Tells the service this field/object has access authorized by sigv4 signing.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false

@@ -15,20 +15,47 @@ export const createdDevice = /* GraphQL */ `
         traceId
         consumerId
         status
-        brushHeadDate
-        firmwareVersion
+        baseConnectColor
+        baseDockedColor
+        baseDownloadColor
+        baseFirmwareVersion
+        baseReadyColor
+        baseUploadColor
+        batteryLevel
+        cartridgeUse
+        cellBand
+        cellDetail
+        cellStrength
+        displayBrightness
+        firmwareMode
+        handleChargingColor
+        handleDocked
+        handleDockedColor
+        handleDownloadColor
+        handleFirmwareVersion
+        handleId
+        handleMode
+        handlePressureHighColor
+        handlePressureLowColor
+        handlePressureMedColor
+        heaterLevel
+        lastCartridgeReplacement
         logLevel
-        macAddress
-        name
         operatingSystem
         operatingSystemVersion
-        parentDeviceId
-        protocolVersion
-        remainingBrushHeadDays
-        ringColor
+        memoryUsed
+        pressureBaseline
+        pressureHysteresis
+        pressureThreshold1
+        pressureThreshold2
+        pressureThreshold2ModeHigh
+        pressureThreshold2ModeLow
+        pressureThreshold2ModeMedium
+        pressureThresholdStroke
         rssi
-        ssid
-        voiceAssistantConfigured
+        sensorRangeAcceleration
+        sensorRangeGyro
+        sensorRangeMag
       }
       privateKey
     }
@@ -44,31 +71,32 @@ export const createdSession = /* GraphQL */ `
       traceId
       consumerId
       sessionId
-      batteryLevel
-      brushModel
-      brushScore
-      brushingDuration
-      cleanTongue
+      algoVersion
+      cartridgeChange
+      cartridgeChangeStatus
+      cartridgeUse
       client
       clientVersion
-      coveragePercentage
-      flossTeeth
-      gatewayModel
-      gumBleeding
-      handleSessionId
-      onEventCount
+      diagnosticResult
+      errorCode
+      errorMessage
+      handleMode
+      modelVersion
       operatingSystem
       operatingSystemVersion
-      parentDeviceId
-      pressureDistribution
-      pressureDuration
-      pressureEventCount
-      primaryBrushingMode
-      rinseMouth
+      percentageOverThreshold
+      percentageOverThresholdByStroke
+      sessionDuration
       sessionStartTime
+      sessionStrokes
+      sessionStrokesDuration
+      sessionStrokesStats
+      sessionStrokeCount
       sessionType
-      zonedBrushTime
+      threshold1
+      threshold2
       zonedPressureTime
+      zonedRepeatTime
     }
   }
 `;
@@ -85,15 +113,6 @@ export const deletedUser = /* GraphQL */ `
 export const updatedDevice = /* GraphQL */ `
   subscription UpdatedDevice {
     updatedDevice {
-      consumables {
-        consumableId
-        deviceId
-        startDate
-        consumableType
-        totalSessionCount
-        totalSessionDurationSeconds
-        state
-      }
       createdBy
       deviceId
       deviceType
@@ -103,20 +122,47 @@ export const updatedDevice = /* GraphQL */ `
       traceId
       consumerId
       status
-      brushHeadDate
-      firmwareVersion
+      baseConnectColor
+      baseDockedColor
+      baseDownloadColor
+      baseFirmwareVersion
+      baseReadyColor
+      baseUploadColor
+      batteryLevel
+      cartridgeUse
+      cellBand
+      cellDetail
+      cellStrength
+      displayBrightness
+      firmwareMode
+      handleChargingColor
+      handleDocked
+      handleDockedColor
+      handleDownloadColor
+      handleFirmwareVersion
+      handleId
+      handleMode
+      handlePressureHighColor
+      handlePressureLowColor
+      handlePressureMedColor
+      heaterLevel
+      lastCartridgeReplacement
       logLevel
-      macAddress
-      name
       operatingSystem
       operatingSystemVersion
-      parentDeviceId
-      protocolVersion
-      remainingBrushHeadDays
-      ringColor
+      memoryUsed
+      pressureBaseline
+      pressureHysteresis
+      pressureThreshold1
+      pressureThreshold2
+      pressureThreshold2ModeHigh
+      pressureThreshold2ModeLow
+      pressureThreshold2ModeMedium
+      pressureThresholdStroke
       rssi
-      ssid
-      voiceAssistantConfigured
+      sensorRangeAcceleration
+      sensorRangeGyro
+      sensorRangeMag
     }
   }
 `;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css';
-import { AmplifyAuthenticator } from '@aws-amplify/ui-react'
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 import Amplify, { API, graphqlOperation } from 'aws-amplify'
 
 import { createDevice } from './graphql/mutations'
@@ -29,8 +29,8 @@ const App = () => {
 
     return (
       <div className="App" style={styles.container}>
+          <AmplifySignOut />
           <h2>Welcome to your Account Dashboard</h2>
-          <AmplifyAuthenticator>
             {
               devicesState.map((device, index) => (
                 <div key={device.thingName} style={styles.todo}>
@@ -38,7 +38,6 @@ const App = () => {
                 </div>
               ))
             }
-          </AmplifyAuthenticator>
       </div>
     );
 }
@@ -53,4 +52,4 @@ const styles = {
 }
 
 
-export default App
+export default withAuthenticator(App)

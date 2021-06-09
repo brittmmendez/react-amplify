@@ -4,15 +4,6 @@
 export const devices = /* GraphQL */ `
   query Devices {
     devices {
-      consumables {
-        consumableId
-        deviceId
-        startDate
-        consumableType
-        totalSessionCount
-        totalSessionDurationSeconds
-        state
-      }
       createdBy
       deviceId
       deviceType
@@ -22,35 +13,53 @@ export const devices = /* GraphQL */ `
       traceId
       consumerId
       status
-      brushHeadDate
-      firmwareVersion
+      baseConnectColor
+      baseDockedColor
+      baseDownloadColor
+      baseFirmwareVersion
+      baseReadyColor
+      baseUploadColor
+      batteryLevel
+      cartridgeUse
+      cellBand
+      cellDetail
+      cellStrength
+      displayBrightness
+      firmwareMode
+      handleChargingColor
+      handleDocked
+      handleDockedColor
+      handleDownloadColor
+      handleFirmwareVersion
+      handleId
+      handleMode
+      handlePressureHighColor
+      handlePressureLowColor
+      handlePressureMedColor
+      heaterLevel
+      lastCartridgeReplacement
       logLevel
-      macAddress
-      name
       operatingSystem
       operatingSystemVersion
-      parentDeviceId
-      protocolVersion
-      remainingBrushHeadDays
-      ringColor
+      memoryUsed
+      pressureBaseline
+      pressureHysteresis
+      pressureThreshold1
+      pressureThreshold2
+      pressureThreshold2ModeHigh
+      pressureThreshold2ModeLow
+      pressureThreshold2ModeMedium
+      pressureThresholdStroke
       rssi
-      ssid
-      voiceAssistantConfigured
+      sensorRangeAcceleration
+      sensorRangeGyro
+      sensorRangeMag
     }
   }
 `;
 export const device = /* GraphQL */ `
   query Device($deviceId: String!) {
     device(deviceId: $deviceId) {
-      consumables {
-        consumableId
-        deviceId
-        startDate
-        consumableType
-        totalSessionCount
-        totalSessionDurationSeconds
-        state
-      }
       createdBy
       deviceId
       deviceType
@@ -60,20 +69,110 @@ export const device = /* GraphQL */ `
       traceId
       consumerId
       status
-      brushHeadDate
-      firmwareVersion
+      baseConnectColor
+      baseDockedColor
+      baseDownloadColor
+      baseFirmwareVersion
+      baseReadyColor
+      baseUploadColor
+      batteryLevel
+      cartridgeUse
+      cellBand
+      cellDetail
+      cellStrength
+      displayBrightness
+      firmwareMode
+      handleChargingColor
+      handleDocked
+      handleDockedColor
+      handleDownloadColor
+      handleFirmwareVersion
+      handleId
+      handleMode
+      handlePressureHighColor
+      handlePressureLowColor
+      handlePressureMedColor
+      heaterLevel
+      lastCartridgeReplacement
       logLevel
-      macAddress
-      name
       operatingSystem
       operatingSystemVersion
-      parentDeviceId
-      protocolVersion
-      remainingBrushHeadDays
-      ringColor
+      memoryUsed
+      pressureBaseline
+      pressureHysteresis
+      pressureThreshold1
+      pressureThreshold2
+      pressureThreshold2ModeHigh
+      pressureThreshold2ModeLow
+      pressureThreshold2ModeMedium
+      pressureThresholdStroke
       rssi
-      ssid
-      voiceAssistantConfigured
+      sensorRangeAcceleration
+      sensorRangeGyro
+      sensorRangeMag
+    }
+  }
+`;
+export const deviceHistory = /* GraphQL */ `
+  query DeviceHistory(
+    $filter: TableDeviceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    deviceHistory(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        createdBy
+        deviceId
+        deviceType
+        receivedTime
+        stateId
+        thingName
+        traceId
+        consumerId
+        status
+        baseConnectColor
+        baseDockedColor
+        baseDownloadColor
+        baseFirmwareVersion
+        baseReadyColor
+        baseUploadColor
+        batteryLevel
+        cartridgeUse
+        cellBand
+        cellDetail
+        cellStrength
+        displayBrightness
+        firmwareMode
+        handleChargingColor
+        handleDocked
+        handleDockedColor
+        handleDownloadColor
+        handleFirmwareVersion
+        handleId
+        handleMode
+        handlePressureHighColor
+        handlePressureLowColor
+        handlePressureMedColor
+        heaterLevel
+        lastCartridgeReplacement
+        logLevel
+        operatingSystem
+        operatingSystemVersion
+        memoryUsed
+        pressureBaseline
+        pressureHysteresis
+        pressureThreshold1
+        pressureThreshold2
+        pressureThreshold2ModeHigh
+        pressureThreshold2ModeLow
+        pressureThreshold2ModeMedium
+        pressureThresholdStroke
+        rssi
+        sensorRangeAcceleration
+        sensorRangeGyro
+        sensorRangeMag
+      }
+      nextToken
     }
   }
 `;
@@ -110,18 +209,12 @@ export const allJobs = /* GraphQL */ `
     }
   }
 `;
-export const replenishmentToken = /* GraphQL */ `
-  query ReplenishmentToken($replenishmentId: ID!) {
-    replenishmentToken(replenishmentId: $replenishmentId)
-  }
-`;
 export const sessions = /* GraphQL */ `
   query Sessions(
     $start: AWSDateTime
     $end: AWSDateTime
     $filter: TableSessionFilterInput
     $limit: Int
-    $orderBySessionStartTime: Sort
     $nextToken: String
   ) {
     sessions(
@@ -129,7 +222,6 @@ export const sessions = /* GraphQL */ `
       end: $end
       filter: $filter
       limit: $limit
-      orderBySessionStartTime: $orderBySessionStartTime
       nextToken: $nextToken
     ) {
       items {
@@ -140,31 +232,32 @@ export const sessions = /* GraphQL */ `
         traceId
         consumerId
         sessionId
-        batteryLevel
-        brushModel
-        brushScore
-        brushingDuration
-        cleanTongue
+        algoVersion
+        cartridgeChange
+        cartridgeChangeStatus
+        cartridgeUse
         client
         clientVersion
-        coveragePercentage
-        flossTeeth
-        gatewayModel
-        gumBleeding
-        handleSessionId
-        onEventCount
+        diagnosticResult
+        errorCode
+        errorMessage
+        handleMode
+        modelVersion
         operatingSystem
         operatingSystemVersion
-        parentDeviceId
-        pressureDistribution
-        pressureDuration
-        pressureEventCount
-        primaryBrushingMode
-        rinseMouth
+        percentageOverThreshold
+        percentageOverThresholdByStroke
+        sessionDuration
         sessionStartTime
+        sessionStrokes
+        sessionStrokesDuration
+        sessionStrokesStats
+        sessionStrokeCount
         sessionType
-        zonedBrushTime
+        threshold1
+        threshold2
         zonedPressureTime
+        zonedRepeatTime
       }
       nextToken
     }
@@ -173,6 +266,8 @@ export const sessions = /* GraphQL */ `
 export const user = /* GraphQL */ `
   query User {
     user {
+      cartridgeCount
+      cartridgeLifeThresholds
       consumerId
       country
       createdAt
@@ -183,8 +278,6 @@ export const user = /* GraphQL */ `
       marketingOptIn
       notificationPreferences
       phoneNumber
-      termsAndConditions
-      timezone
       subscriptions {
         subscriptionId
         subscriptionType
@@ -192,34 +285,9 @@ export const user = /* GraphQL */ `
         status
         productId
       }
-      replenishmentServices {
-        replenishmentId
-        replenishmentType
-        nextOrderDate
-        status
-        productId
-        quantity
-      }
-    }
-  }
-`;
-export const consumables = /* GraphQL */ `
-  query Consumables(
-    $filter: TableConsumableFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    consumables(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        consumableId
-        deviceId
-        startDate
-        consumableType
-        totalSessionCount
-        totalSessionDurationSeconds
-        state
-      }
-      nextToken
+      termsAndConditions
+      timezone
+      userSurvey
     }
   }
 `;
