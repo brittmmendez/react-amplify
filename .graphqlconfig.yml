@@ -1,5 +1,5 @@
 projects:
-  reactamplified:
+  consumerApi:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.js
@@ -10,3 +10,6 @@ projects:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: src/graphql
+        region: us-east-1
+        apiId: oz2bt5vw2rbapfeudk3axr6ohe
+        maxDepth: 2

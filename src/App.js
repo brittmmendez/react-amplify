@@ -1,51 +1,56 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react'
 import './App.css';
-// Configure Amplify on the client so that we can use it to interact with our backend services.
-import Amplify from "aws-amplify";
 import { AmplifyAuthenticator } from '@aws-amplify/ui-react'
+import Amplify, { API, graphqlOperation } from 'aws-amplify'
 
+import { createDevice } from './graphql/mutations'
+import { devices } from './graphql/queries'
 
-class App extends Component {
+import awsConfig from "./aws-config"
+Amplify.configure(awsConfig)
 
-  async componentDidMount() {
-    const discoveryAPIbrandCredentials = {
-      client_id: "jLvFVkBKWyTxzFyHBkCzkfDUPZtQbVinekLeChtb",
-      locale: 'US',
-      secret: "rcNMabfuMaLhWSwmTdKDvjJBNthuYhWTazCSAZFCBSgNhiunrzAwkUmVrqctsTAHdbwRfcejZHhXjyfr"
-    }
+const App = () => {
+  // async componentDidMount() {
+  //   const config = await awsConfig()
+  //   Amplify.configure(config)
+  // }
+  const [devicesState, setDevices] = useState([])
 
-    const base64 = btoa(discoveryAPIbrandCredentials.client_id + ":" + discoveryAPIbrandCredentials.secret)
-    const res = await fetch(`https://sd.alchemy.codes/api/v2/config?locale=${discoveryAPIbrandCredentials.locale}`, {
-      method: 'GET',
-      headers: { authorization: `Basic ${base64}` }
-    });
-    const data = await res.json();
+  useEffect(() => {
+    fetchDevices()
+  }, [])
 
-    const AWSConfig = {
-      aws_appsync_region: data.region,
-      aws_appsync_graphqlEndpoint: data.apiUrl,
-      aws_user_pools_id: data.userPoolId,
-      aws_appsync_authenticationType: "AMAZON_COGNITO_USER_POOLS",
-      aws_user_pools_web_client_id: data.webClientId,
-      aws_cognito_identity_pool_id: data.identityPoolId,
-      aws_cognito_region: data.region,
-    }
-
-    Amplify.configure(AWSConfig);
-
+  async function fetchDevices() {
+    try {
+      const devicesData = await API.graphql(graphqlOperation(devices))
+      setDevices(devicesData.data.devices)
+    } catch (err) { console.log('error fetching devices') }
   }
 
-  render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className="App" style={styles.container}>
+          <h2>Welcome to your Account Dashboard</h2>
           <AmplifyAuthenticator>
-            <p>hello</p>
+            {
+              devicesState.map((device, index) => (
+                <div key={device.thingName} style={styles.todo}>
+                  <p style={styles.todoName} >{device.thingName}</p>
+                </div>
+              ))
+            }
           </AmplifyAuthenticator>
-        </header>
       </div>
     );
-  }
 }
+
+const styles = {
+  container: { width: 700, margin: '0 auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 20 },
+  todo: {  marginBottom: 15 },
+  input: { border: 'none', backgroundColor: '#ddd', marginBottom: 10, padding: 8, fontSize: 18 },
+  todoName: { fontSize: 20, fontWeight: 'bold' },
+  todoDescription: { marginBottom: 0 },
+  button: { backgroundColor: 'black', color: 'white', outline: 'none', fontSize: 18, padding: '12px 0px' }
+}
+
 
 export default App
