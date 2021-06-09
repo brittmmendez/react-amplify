@@ -29,7 +29,7 @@ const App = () => {
 
     return (
       <div className="App" style={styles.container}>
-          <h2>Welcome to your Account Dashboard</h2>
+          <h2>Welcome to your {awsConfig.brandName} Account Dashboard</h2>
           <AmplifyAuthenticator>
             {
               devicesState.map((device, index) => (
